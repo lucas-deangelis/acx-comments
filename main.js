@@ -38,10 +38,14 @@ function treatDate(date) {
 }
 
 function sanitize(text) {
-  let currentText = text.replace(/\</g, "&lt;").replace(/\>/g, "&gt;");
-  currentText = "<p>" + currentText;
-  currentText = currentText.replace(/\n\n/g, "</p><p>");
-  return currentText + "</p>";
+  if (!text) {
+    return "";
+  } else {
+    let currentText = text.replace(/\</g, "&lt;").replace(/\>/g, "&gt;");
+    currentText = "<p>" + currentText;
+    currentText = currentText.replace(/\n\n/g, "</p><p>");
+    return currentText + "</p>";
+  } 
 }
 
 function transformComment(parsedComment) {
@@ -131,9 +135,9 @@ async function outputArticle(articleData) {
   const template = `<div class="article">
   <div class="article-head">
     <a
-      href="${articleData.canonical_url}"
+      href="${articleData.url}"
       class="article-name"
-      ><h2>${"Bonjour" + "titre"}</h2></a
+      ><h2>${articleData.title}</h2></a
     >
     <div class="article-metadata">
       <div class="metadata-item article-time">
