@@ -316,4 +316,4 @@ async function allArticles() {
   return template;
 }
 
-allArticles().then(html => fs.writeFileSync("output.html", html))
+allArticles().then(html => fs.writeFileSync("index.html", html))
