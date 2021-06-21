@@ -51,10 +51,6 @@ function sanitize(text) {
 function transformComment(parsedComment) {
   let children = [];
 
-  if (typeof parsedComment.children == "undefined") {
-    console.log(parsedComment);
-  }
-
   if (parsedComment.children.length > 0) {
     children = parsedComment.children.map(transformComment);
   } else {
@@ -204,11 +200,7 @@ async function outputArticle(articleData) {
 async function allArticles() {
   let articlesData = await allPosts();
 
-  console.log(articlesData);
-  console.log("--------------------------------------------------------------------------------")
-
   let articlesHTML = await Promise.all(articlesData.map(article => outputArticle(article)));
-  console.log(articlesHTML)
 
   let articlesString = articlesHTML.join("");
 
