@@ -16,12 +16,6 @@ const axios = require("axios").default;
 
 const fs = require("fs");
 
-async function getComment(commentID) {
-  let response = await axios.get("https://astralcodexten.substack.com/api/v1/post/34926692/comments?all_comments=true&sort=newest_first")
-  
-  let comments = response.data.comments;
-}
-
 function parseComment(comment) {
   let children = [];
   if (comment.children.length != 0) {
@@ -206,7 +200,11 @@ async function outputArticle(articleData) {
 async function allArticles() {
   let articlesData = await allPosts();
 
+  console.log(articlesData);
+  console.log("--------------------------------------------------------------------------------")
+
   let articlesHTML = await Promise.all(articlesData.map(article => outputArticle(article)));
+  console.log(articlesHTML)
 
   let articlesString = articlesHTML.join("");
 
