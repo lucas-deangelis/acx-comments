@@ -33,6 +33,8 @@ async function allPostIDs() {
   return postIds;
 }
 
-allPostIDs().then(ids =>  { 
-  require("fs").writeFileSync("ids.txt", ids.join(", "));
-})
+axios.get("https://astralcodexten.substack.com/api/v1/post/34926692/comments?all_comments=true&sort=newest_first").then(response => require("fs").writeFileSync("comments.json", JSON.stringify(response.data.comments)));
+
+// allPostIDs().then(ids =>  { 
+//   require("fs").writeFileSync("ids.txt", ids.join(", "));
+// })

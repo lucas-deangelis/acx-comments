@@ -1,0 +1,279 @@
+{
+"id": 1688772,
+    "user_id": 25590464,
+    "publication_id": 89120,
+    "post_id": 34926692,
+    "ancestor_path": "",
+    "body": "The footnote and return anchor links don't work.  They're formatted as absolute links to somewhere on slatestarcodex.com.  They should be formatted as relative works so that they'll work regardless of where the page is located.  (As in, the link href should only contain \"#anchortolinkto\", not the rest of the URL.)",
+    "date": "2021-04-08T23:34:30.127Z",
+    "deleted": false,
+    "name": "Sniffnoy",
+    "photo_url": "https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/16c029df-9e94-4f98-a3a7-2fbcbcd37af7_100x98.jpeg",
+    "reactions": {
+      "❤": 0
+    },
+    "is_author": false,
+    "reactor_names": [],
+    "reaction": null,
+    "children": [
+      {
+        "id": 1688826,
+        "user_id": 12009663,
+        "publication_id": 89120,
+        "post_id": 34926692,
+        "ancestor_path": 1688772,
+        "body": "Technical difficulties, please stand by.",
+        "date": "2021-04-08T23:46:56.017Z",
+        "deleted": false,
+        "name": "Scott Alexander",
+        "photo_url": "https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/7b500d22-1176-42ad-afaa-5d72bc36a809_44x44.png",
+        "reactions": {
+          "❤": 0
+        },
+        "is_author": true,
+        "reactor_names": [],
+        "reaction": null,
+        "children": [
+          {
+            "id": 1688844,
+            "user_id": 12009663,
+            "publication_id": 89120,
+            "post_id": 34926692,
+            "ancestor_path": 1688772.1688826,
+            "body": "I think this might not be solveable on Substack.",
+            "date": "2021-04-08T23:51:23.056Z",
+            "deleted": false,
+            "name": "Scott Alexander",
+            "photo_url": "https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/7b500d22-1176-42ad-afaa-5d72bc36a809_44x44.png",
+            "reactions": {
+              "❤": 0
+            },
+            "is_author": true,
+            "reactor_names": [],
+            "reaction": null,
+            "children": [
+              {
+                "id": 1689301,
+                "user_id": 25590464,
+                "publication_id": 89120,
+                "post_id": 34926692,
+                "ancestor_path": "1688772.1688826.1688844",
+                "body": "That doesn't make sense -- there's no way that Substack forces you to use absolute links to slatestarcodex.com!  At the very least it should be possible to use absolute links to the actual URL, rather than a wrong one.",
+                "date": "2021-04-09T01:49:45.666Z",
+                "deleted": false,
+                "name": "Sniffnoy",
+                "photo_url": "https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/16c029df-9e94-4f98-a3a7-2fbcbcd37af7_100x98.jpeg",
+                "reactions": {
+                  "❤": 0
+                },
+                "is_author": false,
+                "reactor_names": [],
+                "reaction": null,
+                "children": [
+                  {
+                    "id": 1689312,
+                    "user_id": 12009663,
+                    "publication_id": 89120,
+                    "post_id": 34926692,
+                    "ancestor_path": "1688772.1688826.1688844.1689301",
+                    "body": "I used SSC to convert the raw HTML into a readable format. When I realized that broke the footnotes, I changed every SSC link to the corresponding ACX link. When that didn't help, I gave up.",
+                    "date": "2021-04-09T01:52:28.977Z",
+                    "deleted": false,
+                    "name": "Scott Alexander",
+                    "photo_url": "https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/7b500d22-1176-42ad-afaa-5d72bc36a809_44x44.png",
+                    "reactions": {
+                      "❤": 0
+                    },
+                    "is_author": true,
+                    "reactor_names": [],
+                    "reaction": null,
+                    "children": [
+                      {
+                        "id": 1689330,
+                        "user_id": 25590464,
+                        "publication_id": 89120,
+                        "post_id": 34926692,
+                        "ancestor_path": "1688772.1688826.1688844.1689301.1689312",
+                        "body": "I wouldn't say \"that didn't help\" -- it got rid of linking to a page that didn't exist!  It's still an improvement,  it just didn't solve the problem all the way. :)\n\nLooking at the source code, the problem is that the links point to anchors that don't exist.  So e.g., footnote 2 links to an anchor \"fn:replant\", and the link back from footnote 2 links to an an anchor \"fnref:replant\", but there are no such anchors, so they don't work.  So, if you want this to work, you'll have to add the appropriate anchors.  So e.g., the footnote 2 link should, in addition to href=\"...\", also have name=\"fnref:replant\".  And at the beginning of foonote 2 there should be an 'a' tag with name=\"fn:replant\".\n\nI do notice you changed the anchor links from absolute on slatestarcodex.com, to absolute on the correct page; that will work, once you add the names, but I would still encourage you to use relative anchor links as described above -- where you only include the anchor (including the number sign), not the rest of the URL -- so that they will still work if this is posted elsewhere, as general good practice.",
+                        "date": "2021-04-09T01:58:56.764Z",
+                        "deleted": false,
+                        "name": "Sniffnoy",
+                        "photo_url": "https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/16c029df-9e94-4f98-a3a7-2fbcbcd37af7_100x98.jpeg",
+                        "reactions": {
+                          "❤": 0
+                        },
+                        "is_author": false,
+                        "reactor_names": [],
+                        "reaction": null,
+                        "children": [],
+                        "bans": [],
+                        "user_banned": false,
+                        "user_banned_for_comment": false,
+                        "tags": [],
+                        "score": 0.005952380952380952
+                      }
+                    ],
+                    "bans": [],
+                    "user_banned": false,
+                    "user_banned_for_comment": false,
+                    "tags": [
+                      "author"
+                    ],
+                    "score": 0.02976190476190476
+                  }
+                ],
+                "bans": [],
+                "user_banned": false,
+                "user_banned_for_comment": false,
+                "tags": [],
+                "score": 0.005952380952380952
+              },
+              {
+                "id": 1688898,
+                "user_id": 3280289,
+                "publication_id": 89120,
+                "post_id": 34926692,
+                "ancestor_path": "1688772.1688826.1688844",
+                "body": "I've directly copy-pasted raw HTML into substack before and I think I've gotten this to work before, I can try again and report back. There's a lot of document features in substac you can only get if you write up some HTML, open it in a web browser, copy, and paste directly.",
+                "date": "2021-04-09T00:04:52.742Z",
+                "deleted": false,
+                "name": "larsiusprime",
+                "photo_url": null,
+                "reactions": {
+                  "❤": 0
+                },
+                "is_author": false,
+                "reactor_names": [],
+                "reaction": null,
+                "children": [
+                  {
+                    "id": 1689610,
+                    "user_id": 3280289,
+                    "publication_id": 89120,
+                    "post_id": 34926692,
+                    "ancestor_path": "1688772.1688826.1688844.1688898",
+                    "body": "Okay, I just tested it and it does work on a substack account.\n\nHere's my test case.\n\n1. Used this source:\nhttps://pastebin.com/11MLJpAB\n\n2. Save as blah.html\n\n3. Open in browser, Ctrl+A to select all, copy-paste\n\n4. Go to substack, write post, paste, publish (on a zero audience list for testing purposes).\n\nFrom what I can tell, the substack WYSIWYG even seems to notice this. You can set an anchor link by typing e.g. \"#footnoteid\" in the link content. However, I can't find a way in the WYSIWYG to set the underlying \"id\" parameter on the tag you want that anchor to jump to. You can slip it past the goalie by copy pasting a naked HTML file directly into substack, tho.",
+                    "date": "2021-04-09T03:17:37.191Z",
+                    "deleted": false,
+                    "name": "larsiusprime",
+                    "photo_url": null,
+                    "reactions": {
+                      "❤": 0
+                    },
+                    "is_author": false,
+                    "reactor_names": [],
+                    "reaction": null,
+                    "children": [
+                      {
+                        "id": 1689624,
+                        "user_id": 3280289,
+                        "publication_id": 89120,
+                        "post_id": 34926692,
+                        "ancestor_path": "1688772.1688826.1688844.1688898.1689610",
+                        "body": "Also -- another tech tip for substack and HTML. \n\nI run an (extremely tiny experimental and nascent substack) that I generate HTML for as part of my research at work, and the way we get all our formatting in is this:\n\n1. Generate the HTML (simple, has only basic tags, no reliance on CSS)\n2. Open in browser, Ctrl+A, copy (I said copy-paste above, I meant copy)\n3. Paste in substack\n\nSubstack seems to ingest it just fine, recognizes tags like <blockquote>, seems to handle our images pretty well, etc. \n\nSo if anyone submitted book reviews to you in a plain-jane HTML format, my advice is to copy it from a browser and paste THAT directly into substack and see how it looks; if they're not relying on any weird CSS and it's just structured text with basic tags chances are it should work. If it has simply formatted anchor tags for footnotes, in theory those should work too!",
+                        "date": "2021-04-09T03:21:47.408Z",
+                        "deleted": false,
+                        "name": "larsiusprime",
+                        "photo_url": null,
+                        "reactions": {
+                          "❤": 0
+                        },
+                        "is_author": false,
+                        "reactor_names": [],
+                        "reaction": null,
+                        "children": [],
+                        "bans": [],
+                        "user_banned": false,
+                        "user_banned_for_comment": false,
+                        "tags": [],
+                        "score": 0.005952380952380952
+                      }
+                    ],
+                    "bans": [],
+                    "user_banned": false,
+                    "user_banned_for_comment": false,
+                    "tags": [],
+                    "score": 0.005952380952380952
+                  }
+                ],
+                "bans": [],
+                "user_banned": false,
+                "user_banned_for_comment": false,
+                "tags": [],
+                "score": 0.005952380952380952
+              },
+              {
+                "id": 1688869,
+                "user_id": 25585625,
+                "publication_id": 89120,
+                "post_id": 34926692,
+                "ancestor_path": "1688772.1688826.1688844",
+                "body": "In the editor, there's an option to add footnotes (far right option). They seem to work roughly as you intend.",
+                "date": "2021-04-08T23:57:36.565Z",
+                "deleted": false,
+                "name": "Pycea",
+                "photo_url": "https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/4d0a746b-4bd2-43c7-8636-c4ed9ee2e135_200x200.png",
+                "reactions": {
+                  "❤": 0
+                },
+                "is_author": false,
+                "reactor_names": [],
+                "reaction": null,
+                "children": [],
+                "bans": [],
+                "user_banned": false,
+                "user_banned_for_comment": false,
+                "tags": [
+                  "founding"
+                ],
+                "score": 0.005952380952380952
+              }
+            ],
+            "bans": [],
+            "user_banned": false,
+            "user_banned_for_comment": false,
+            "tags": [
+              "author"
+            ],
+            "score": 0.02976190476190476
+          }
+        ],
+        "bans": [],
+        "user_banned": false,
+        "user_banned_for_comment": false,
+        "tags": [
+          "author"
+        ],
+        "score": 0.02976190476190476
+      },
+      {
+        "id": 1688773,
+        "user_id": 25590464,
+        "publication_id": 89120,
+        "post_id": 34926692,
+        "ancestor_path": 1688772,
+        "body": "Oops, I meant \"relative links\", obviously, not \"relative works\".",
+        "date": "2021-04-08T23:34:53.752Z",
+        "deleted": false,
+        "name": "Sniffnoy",
+        "photo_url": "https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/16c029df-9e94-4f98-a3a7-2fbcbcd37af7_100x98.jpeg",
+        "reactions": {
+          "❤": 0
+        },
+        "is_author": false,
+        "reactor_names": [],
+        "reaction": null,
+        "children": [],
+        "bans": [],
+        "user_banned": false,
+        "user_banned_for_comment": false,
+        "tags": [],
+        "score": 0.005952380952380952
+      }
+    ],
+    "bans": [],
+    "user_banned": false,
+    "user_banned_for_comment": false,
+    "tags": [],
+    "score": 0.005952380952380952
+  }
