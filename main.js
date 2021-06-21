@@ -29,7 +29,7 @@ function parseComment(comment) {
     photo_url: comment.photo_url,
     is_author: comment.is_author,
     children: children,
-  }
+  };
 }
 
 function treatDate(date) {
@@ -45,7 +45,7 @@ function sanitize(text) {
     currentText = "<p>" + currentText;
     currentText = currentText.replace(/\n\n/g, "</p><p>");
     return currentText + "</p>";
-  } 
+  }
 }
 
 function transformComment(parsedComment) {
@@ -76,27 +76,29 @@ function transformComment(parsedComment) {
     ${children.join("")}
   </div>
 </div>
-</div>`
+</div>`;
 
   return singleComment;
 }
 
 async function postIDOffset(offset) {
   // Post are given by batches of 12 even if you increase the limit, so we have to increase the offset
-  const response = await axios.get(`https://astralcodexten.substack.com/api/v1/archive?sort=new&search=&offset=${offset}&limit=12`);
+  const response = await axios.get(
+    `https://astralcodexten.substack.com/api/v1/archive?sort=new&search=&offset=${offset}&limit=12`
+  );
 
   if (response.data.length == 0) {
     return [];
   } else {
-    const posts = response.data.map(post => {
+    const posts = response.data.map((post) => {
       return {
         id: post.id,
         title: post.title,
         date: post.post_date,
         url: post.canonical_url,
         commentsCount: post.comment_count,
-        likesCount: post.reactions['❤'],
-      }
+        likesCount: post.reactions["❤"],
+      };
     });
     return posts;
   }
@@ -120,11 +122,15 @@ async function allPosts() {
 }
 // Transform an article object into the HTML
 async function outputArticle(articleData) {
-  const response = await axios.get(`https://astralcodexten.substack.com/api/v1/post/${articleData.id}/comments?all_comments=true&sort=newest_first`);
+  const response = await axios.get(
+    `https://astralcodexten.substack.com/api/v1/post/${articleData.id}/comments?all_comments=true&sort=newest_first`
+  );
   const comments = response.data.comments;
 
-  let parsedComments = comments.map(comment => parseComment(comment));
-  let transformedComments = parsedComments.map(parsedComment => transformComment(parsedComment));
+  let parsedComments = comments.map((comment) => parseComment(comment));
+  let transformedComments = parsedComments.map((parsedComment) =>
+    transformComment(parsedComment)
+  );
 
   const commentsHTML = transformedComments.join("");
 
@@ -200,7 +206,9 @@ async function outputArticle(articleData) {
 async function allArticles() {
   let articlesData = await allPosts();
 
-  let articlesHTML = await Promise.all(articlesData.map(article => outputArticle(article)));
+  let articlesHTML = await Promise.all(
+    articlesData.map((article) => outputArticle(article))
+  );
 
   let articlesString = articlesHTML.join("");
 
@@ -316,4 +324,4 @@ async function allArticles() {
   return template;
 }
 
-allArticles().then(html => fs.writeFileSync("index.html", html))
+allArticles().then((html) => fs.writeFileSync("index.html", html));
