@@ -1,6 +1,4 @@
-const axios = require("axios").default;
-
-// )
+import axios from "axios";
 
 // const comments = `https://astralcodexten.substack.com/api/v1/post/${post_id}/comments?all_comments=true&sort=newest_first`
 
@@ -14,10 +12,20 @@ const axios = require("axios").default;
   - children: an array of children, which are also comments. Is an empty list if there are no comments
 */
 
-const fs = require("fs");
+import { writeFileSync } from "fs";
 
-function parseComment(comment) {
+interface Comment {
+  author: string;
+  date: string;
+  text: string;
+  photo_url: string;
+  is_author: boolean;
+  children: Array<Comment>;
+}
+
+function parseComment(comment: any): Comment {
   let children = [];
+
   if (comment.children.length != 0) {
     children = comment.children.map(parseComment);
   }
@@ -32,12 +40,12 @@ function parseComment(comment) {
   };
 }
 
-function treatDate(date) {
+function treatDate(date: string): string {
   // From 2021-04-09T03:21:47.408Z to 2021-04-09 03:21:47
   return date.replace("T", " ").slice(0, 19);
 }
 
-function sanitize(text) {
+function sanitize(text: string): string {
   if (!text) {
     return "";
   } else {
@@ -48,8 +56,8 @@ function sanitize(text) {
   }
 }
 
-function transformComment(parsedComment) {
-  let children = [];
+function transformComment(parsedComment: Comment): string {
+  let children: Array<string> = [];
 
   if (parsedComment.children.length > 0) {
     children = parsedComment.children.map(transformComment);
@@ -81,7 +89,16 @@ function transformComment(parsedComment) {
   return singleComment;
 }
 
-async function postIDOffset(offset) {
+interface Post {
+  id: number;
+  title: string;
+  date: string;
+  url: string;
+  commentsCount: number;
+  likesCount: number;
+}
+
+async function postIDOffset(offset: number): Promise<Array<Post>> {
   // Post are given by batches of 12 even if you increase the limit, so we have to increase the offset
   const response = await axios.get(
     `https://astralcodexten.substack.com/api/v1/archive?sort=new&search=&offset=${offset}&limit=12`
@@ -104,8 +121,8 @@ async function postIDOffset(offset) {
   }
 }
 
-async function allPosts() {
-  let posts = [];
+async function allPosts(): Promise<Array<Post>> {
+  let posts: Array<Post> = [];
   let offset = 0;
 
   let currentIds = await postIDOffset(offset);
@@ -120,15 +137,16 @@ async function allPosts() {
 
   return posts;
 }
+
 // Transform an article object into the HTML
-async function outputArticle(articleData) {
+async function outputArticle(articleData: Post): Promise<string> {
   const response = await axios.get(
     `https://astralcodexten.substack.com/api/v1/post/${articleData.id}/comments?all_comments=true&sort=newest_first`
   );
   const comments = response.data.comments;
 
-  let parsedComments = comments.map((comment) => parseComment(comment));
-  let transformedComments = parsedComments.map((parsedComment) =>
+  const parsedComments: Array<Comment> = comments.map((comment: Record<string, unknown>) => parseComment(comment));
+  const transformedComments: Array<string> = parsedComments.map((parsedComment) =>
     transformComment(parsedComment)
   );
 
@@ -203,16 +221,16 @@ async function outputArticle(articleData) {
   return template;
 }
 
-async function allArticles() {
-  let articlesData = await allPosts();
+async function allArticles(): Promise<string> {
+  const articlesData = await allPosts();
 
-  let articlesHTML = await Promise.all(
+  const articlesHTML = await Promise.all(
     articlesData.map((article) => outputArticle(article))
   );
 
-  let articlesString = articlesHTML.join("");
+  const articlesString = articlesHTML.join("");
 
-  let template = `<!DOCTYPE html>
+  const template = `<!DOCTYPE html>
   <html lang="en">
     <head>
       <meta charset="UTF-8" />
@@ -324,4 +342,4 @@ async function allArticles() {
   return template;
 }
 
-allArticles().then((html) => fs.writeFileSync("index.html", html));
+allArticles().then((html) => writeFileSync("index.html", html));
